@@ -3,9 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Example</title>
+    <title>IS Group 2-6 • Information Systems</title>
+    <meta name="description" content="IS Group 2-6 — building data-driven systems, products, and impact.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-1: #0f1020;
+            --bg-2: #151734;
+            --bg-3: #0b0d22;
+            --accent: #7cf7ff;
+            --accent-2: #a97cff;
+            --glow: 0 0 20px rgba(124, 247, 255, 0.45), 0 0 40px rgba(169, 124, 255, 0.35);
+            --text: #e8ecf1;
+            --muted: #a6b0c3;
+            --glass: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.12);
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+            color: var(--text);
+            background: radial-gradient(1200px 800px at 10% 10%, rgba(124,247,255,0.12), transparent 60%),
+                        radial-gradient(900px 700px at 90% 20%, rgba(169,124,255,0.12), transparent 60%),
+                        linear-gradient(180deg, var(--bg-1), var(--bg-3));
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient glow layer */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -20% -20% -20% -20%;
+            background: conic-gradient(from 90deg at 50% 50%, rgba(124,247,255,0.12), rgba(169,124,255,0.12), rgba(124,247,255,0.12));
+            filter: blur(80px) saturate(140%);
+            animation: swirl 18s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        @keyframes swirl {
+            from { transform: rotate(0deg) scale(1.05); }
+            to { transform: rotate(360deg) scale(1.05); }
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: min(1200px, 92%);
+            margin: 0 auto;
+        }
+
+        /* Navbar */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(180deg, rgba(10,12,30,0.8), rgba(10,12,30,0.3));
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+        }
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: var(--glow);
+            display: grid;
+            place-items: center;
+            color: #081018;
+            font-family: 'Orbitron', monospace;
+            font-weight: 800;
+        }
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .cta {
+            padding: 10px 16px;
+            border-radius: 12px;
+            color: #081018;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: var(--glow);
+            font-weight: 700;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            padding: 88px 0 64px;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 36px;
+            align-items: center;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.04);
+            color: var(--accent);
+            font-weight: 700;
+            letter-spacing: 0.6px;
+        }
+        .hero h1 {
+            margin: 16px 0 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(34px, 6vw, 64px);
+            line-height: 1.05;
+            text-shadow: 0 0 20px rgba(124,247,255,0.25);
+        }
+        .hero p {
+            margin: 0 0 20px;
+            color: var(--muted);
+            font-size: 18px;
+        }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn {
+            padding: 12px 18px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--glass);
+            color: var(--text);
+            font-weight: 700;
+        }
+        .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #081018; box-shadow: var(--glow); }
+
+        /* Decorative orb */
+        .orb {
+            width: min(560px, 100%);
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(124,247,255,0.9), transparent 45%),
+                        radial-gradient(circle at 70% 60%, rgba(169,124,255,0.9), transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(124,247,255,0.6), rgba(10,12,30,0.4) 60%);
+            filter: blur(0.2px);
+            box-shadow: 0 0 80px rgba(124,247,255,0.25), inset 0 0 60px rgba(169,124,255,0.2);
+            animation: floaty 6s ease-in-out infinite;
+            position: relative;
+        }
+        .orb::after {
+            content: "";
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px dashed rgba(124,247,255,0.2);
+            animation: spin 16s linear infinite;
+        }
+        @keyframes floaty { 0%,100%{ transform: translateY(0px);} 50%{ transform: translateY(-10px);} }
+        @keyframes spin { to { transform: rotate(360deg);} }
+
+        /* Sections */
+        section { padding: 72px 0; }
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 28px;
+            margin: 0 0 12px;
+        }
+        .section-subtitle { color: var(--muted); margin: 0 0 28px; }
+
+        /* Feature cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 220ms ease, box-shadow 220ms ease;
+        }
+        .card:hover { transform: translateY(-6px); box-shadow: 0 8px 40px rgba(0,0,0,0.35), var(--glow); }
+        .card .icon {
+            width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #081018; font-weight: 800; font-family: 'Orbitron', monospace;
+            box-shadow: var(--glow);
+        }
+        .card h3 { margin: 12px 0 6px; font-size: 18px; }
+        .card p { margin: 0; color: var(--muted); font-size: 14px; }
+
+        /* Showcase */
+        .showcase {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 16px;
+        }
+        .panel {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+            padding: 18px;
+        }
+        .list { display: grid; gap: 12px; margin-top: 8px; }
+        .list-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px dashed var(--border); border-radius: 12px; background: rgba(0,0,0,0.15);
+        }
+        .badge { font-size: 12px; color: #081018; padding: 6px 10px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--glow); font-weight: 800; font-family: 'Orbitron', monospace; }
+
+        /* Footer */
+        footer { padding: 36px 0 60px; color: var(--muted); text-align: center; }
+        .footer-links { display: flex; gap: 16px; justify-content: center; margin-top: 10px; }
+
+        /* Reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity 500ms ease, transform 500ms ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .showcase { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 560px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <h1>It worked!</h1>
+    <header class="nav">
+        <div class="container nav-inner">
+            <div class="brand">
+                <div class="brand-logo">IS</div>
+                <div>Group 2-6 • Information Systems</div>
+            </div>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#events">Events</a>
+                <a class="cta" href="#join">Join Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-grid">
+                <div>
+                    <span class="eyebrow">⚡ ISfall2025grp2-6 • Data • Systems • Impact</span>
+                    <h1>We build bold Information Systems that ship and shine.</h1>
+                    <p>
+                        From data pipelines and dashboards to full‑stack products, we turn ideas into
+                        polished, production‑ready systems with measurable impact.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="btn primary" href="#projects">Explore Projects</a>
+                        <a class="btn" href="#about">Meet the Team</a>
+                    </div>
+                </div>
+                <div>
+                    <div class="orb" aria-hidden="true"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="container reveal">
+            <h2 class="section-title">What we do</h2>
+            <p class="section-subtitle">Hands‑on problem solving, modern tooling, and a bias for shipping.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">AI</div>
+                    <h3>Analytics & AI</h3>
+                    <p>ETL, modeling, and insight delivery with practical ML where it counts.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">UX</div>
+                    <h3>Product & UX</h3>
+                    <p>Human‑centered interfaces, rapid prototyping, and refined UI polish.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">DB</div>
+                    <h3>Data Systems</h3>
+                    <p>Reliable, scalable storage and APIs built with clarity and care.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">CT</div>
+                    <h3>Collab & Tools</h3>
+                    <p>Dev tooling, automation, and docs that keep teams moving fast.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="container reveal">
+            <h2 class="section-title">Featured projects</h2>
+            <p class="section-subtitle">A snapshot of the systems we’re excited about.</p>
+            <div class="showcase">
+                <div class="panel">
+                    <h3 style="margin:0 0 8px;">Real‑time Campus Insights</h3>
+                    <p style="margin:0; color: var(--muted);">Event telemetry → dashboards → decisions. Live metrics with delightful UX.</p>
+                    <div class="list" style="margin-top:14px;">
+                        <div class="list-item"><span class="badge">Kafka</span> Streaming pipeline with windowed aggregations</div>
+                        <div class="list-item"><span class="badge">React</span> Interactive, real‑time visualizations</div>
+                        <div class="list-item"><span class="badge">Cloud</span> Cost‑aware deployment + IaC</div>
+                    </div>
+                </div>
+                <div class="panel">
+                    <h3 style="margin:0 0 8px;">Student Success Advisor</h3>
+                    <p style="margin:0; color: var(--muted);">Proactive signals highlighting at‑risk courses and support actions.</p>
+                    <div class="list" style="margin-top:14px;">
+                        <div class="list-item"><span class="badge">Python</span> Feature pipelines + explainable models</div>
+                        <div class="list-item"><span class="badge">Design</span> Accessible workflows and clarity by default</div>
+                        <div class="list-item"><span class="badge">API</span> Secure services with audit trails</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="container reveal">
+            <h2 class="section-title">Events & milestones</h2>
+            <p class="section-subtitle">Learn, build, and celebrate together.</p>
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">WS</div>
+                    <h3>Workshops</h3>
+                    <p>From data viz to devops, sessions that level up our craft.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">HT</div>
+                    <h3>Hack Nights</h3>
+                    <p>Weekly sprints, pizza included. Demo or it didn’t happen.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">SP</div>
+                    <h3>Speaker Series</h3>
+                    <p>Industry guests and alumni sharing real‑world lessons.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🏆</div>
+                    <h3>Ship It</h3>
+                    <p>Quarterly showcase of shipped features and wins.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="join" class="container reveal" style="text-align:center;">
+            <h2 class="section-title">Join Group 2-6</h2>
+            <p class="section-subtitle">We’re looking for curious builders who love great systems and great teams.</p>
+            <a class="btn primary" href="mailto:example@university.edu?subject=Join%20IS%20Group%202-6">Email Us</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div>© <span id="year"></span> IS Group 2-6 • Crafted with care.</div>
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#events">Events</a>
+                <a href="#join">Join</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on scroll
+        const revealItems = () => {
+            const els = document.querySelectorAll('.reveal');
+            const trigger = window.innerHeight * 0.88;
+            els.forEach(el => {
+                const box = el.getBoundingClientRect();
+                if (box.top < trigger) el.classList.add('visible');
+            });
+        };
+        document.addEventListener('scroll', revealItems, { passive: true });
+        window.addEventListener('load', () => { revealItems(); });
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
